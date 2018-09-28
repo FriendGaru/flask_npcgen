@@ -1,0 +1,3 @@
+[submodule "npcgen"]
+	path = npcgen
+	url = https://github.com/FriendGaru/npcgen
