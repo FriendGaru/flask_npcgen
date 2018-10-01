@@ -1,1 +1,1 @@
-web: gunicorn flask_npcgen:app
+web: gunicorn app:flask_npcgen
