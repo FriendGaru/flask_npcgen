@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>An NPC!</title>
+  </head>
+     <div class="row">
+      <div class="column">{% include 'statblock_chunk.html' %}</div>
+      <div class="column">{% include 'npc_form.html' %}</div>
+    </div>
+  <div>
+      {{plaintext}}
+  </div>
+  </body>
+</html>

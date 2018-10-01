@@ -1,0 +1,23 @@
+<form action="" method="post">
+    Seed:
+    <input type="text" id="seed" name="seed" value="{{seed}}"><br/>
+    Race:
+    <select id="race" name="race">
+        {% for race_option in race_options %}
+        <option value="{{race_option[0]}}">{{race_option[1]}}</option>
+        {% endfor %}
+    </select><br/>
+    Class:
+    <select id="class" name="class">
+        {% for class_option in class_options %}
+        <option value="{{class_option[0]}}">{{class_option[1]}}</option>
+        {% endfor %}
+    </select><br/>
+    HD:
+    <select id="hd" name="hd">
+        {% for hd_num in hd_range %}
+        <option value="{{hd_num}}">{{hd_num}}</option>
+        {% endfor %}
+    </select><br/>
+    <button id="submit" type="submit" value="Submit">Submit</button>
+</form>
