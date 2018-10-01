@@ -4,6 +4,9 @@ import string
 from app import app
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'flask_npcgen/npcgen'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'flask_npcgen'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '.', 'npcgen'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '', 'npcgen'))
 import npcgen.npcgen as genny
 
 npc_generator = None
