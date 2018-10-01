@@ -1,1 +1,1 @@
-web: gunicorn flask_npcgen:flask_npcgen
+web: gunicorn -b :$PORT flask_npcgen:flask_npcgen
