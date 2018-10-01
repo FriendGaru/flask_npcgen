@@ -6,4 +6,4 @@ Jinja2==2.10
 MarkupSafe==1.0
 requests==2.18.4
 Werkzeug==0.14.1
--e https://github.com/FriendGaru/npcgen.git#egg=npcgen
+git+https://github.com/FriendGaru/npcgen.git#egg=npcgen
