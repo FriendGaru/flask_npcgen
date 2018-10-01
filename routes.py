@@ -2,6 +2,8 @@ from flask import Flask, url_for, request, render_template
 import random
 import string
 from app import app
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'flask_npcgen/npcgen'))
 import npcgen.npcgen
 
 npc_generator = None
