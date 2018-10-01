@@ -1,7 +1,7 @@
 from flask import Flask, url_for, request, render_template
 import random
 import string
-from flask_npcgen import app
+from flask_npcgen import flask_app
 import npcgen.npcgen as genny
 
 npc_generator = None
