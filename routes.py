@@ -11,12 +11,12 @@ def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for _ in range(length))
 
 
-@app.route('/')
+@flask_app.route('/')
 def hello():
     return 'hello'
 
 
-@app.route('/npc', methods=['GET', 'POST'])
+@flask_app.route('/npc', methods=['GET', 'POST'])
 def npc():
     global npc_generator
     if not npc_generator:
