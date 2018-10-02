@@ -1,1 +1,1 @@
-web: gunicorn flask_npcgen --log-file=-
+web: gunicorn flask_npcgen:app --log-file=-
