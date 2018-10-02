@@ -4,10 +4,10 @@ It contains the definition of routes and views for the application.
 """
 
 from flask import Flask
-flask_app = Flask(__name__)
+app = Flask(__name__)
 
 # Make the WSGI interface available at the top level so wfastcgi can get it.
-wsgi_app = flask_app.wsgi_app
+wsgi_app = app.wsgi_app
 
 from routes import *
 
@@ -18,8 +18,10 @@ from routes import *
 #         PORT = int(os.environ.get('SERVER_PORT', '5555'))
 #     except ValueError:
 #         PORT = 5555
-#     flask_app.run(HOST, PORT)
+#     app.run(HOST, PORT)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
+#
+#     app.run()
 
-    flask_app.run()
+app.run()

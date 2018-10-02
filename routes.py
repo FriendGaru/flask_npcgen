@@ -1,7 +1,7 @@
 from flask import Flask, url_for, request, render_template
 import random
 import string
-from flask_npcgen import flask_app
+from flask_npcgen import app
 import npcgen.npcgen as genny
 
 npc_generator = None
@@ -11,12 +11,12 @@ def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for _ in range(length))
 
 
-@flask_app.route('/')
+@app.route('/')
 def hello():
     return 'hello'
 
 
-@flask_app.route('/npc', methods=['GET', 'POST'])
+@app.route('/npc', methods=['GET', 'POST'])
 def npc():
     global npc_generator
     if not npc_generator:
