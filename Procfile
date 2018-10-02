@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT flask_npcgen:flask_npcgen --preload --workers 1
+web: gunicorn -b :$PORT flask_npcgen.wsgi_app --preload --workers 1
