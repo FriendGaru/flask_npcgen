@@ -20,8 +20,7 @@ from routes import *
 #         PORT = 5555
 #     app.run(HOST, PORT)
 
-# if __name__ == '__main__':
-#
-#     app.run()
+if __name__ == '__main__':
 
-app.run()
+    app.run()
+
