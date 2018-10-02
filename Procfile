@@ -1,1 +1,1 @@
-web: gunicorn flask_npcgen.wsgi_app --preload --workers 1
+web: gunicorn flask_npcgen:flask_npcgen --log-file=-
