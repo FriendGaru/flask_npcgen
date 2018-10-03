@@ -41,7 +41,7 @@ def npc():
         hit_dice_num=hd,
     )
     stat_block = new_npc.build_stat_block()
-    plaintext = stat_block.display()
+    plaintext = stat_block.plain_text()
     stat_block_dict = stat_block.get_dict()
 
     html_traits = []
