@@ -8,10 +8,16 @@
   </head>
      <div class="row">
       <div class="column">{% include 'statblock_chunk.html' %}</div>
-      <div class="column">{% include 'npc_form.html' %}</div>
+      <div class="column">
+          {% include 'npc_form.html' %}
+          <textarea name="text" cols="40" rows="15">
+            {{plaintext}}
+          </textarea>
+      </div>
     </div>
   <div>
-      {{plaintext}}
+
+
   </div>
   </body>
 </html>
