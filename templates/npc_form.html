@@ -1,17 +1,31 @@
 <form action="" method="post">
     Seed:
-    <input type="text" id="seed" name="seed" value="{{seed}}"><br/>
+    <input type="text" id="seed" name="seed" value="{{new_seed}}"><br/>
     Race:
     <select id="race" name="race">
+        <optgroup label="Races">
         {% for race_option in race_options %}
-        <option value="{{race_option[0]}}">{{race_option[1]}}</option>
+            {% if race_option[0] == "@CATEGORY" %}
+                </optgroup>>
+                <optgroup label="{{ race_option[1] }}">
+             {% else %}
+                <option value="{{race_option[0]}}">{{race_option[1]}}</option>
+                    {% endif %}
         {% endfor %}
+        </optgroup>>
     </select><br/>
     Class:
     <select id="class" name="class">
+    <optgroup label="Classes">
         {% for class_option in class_options %}
+            {% if class_option[0] == "@CATEGORY" %}
+            </optgroup>
+            <optgroup label="{{class_option[1]}}">
+                {% else %}
         <option value="{{class_option[0]}}">{{class_option[1]}}</option>
+                {% endif %}
         {% endfor %}
+    </optgroup>>
     </select><br/>
     HD:
     <select id="hd" name="hd">

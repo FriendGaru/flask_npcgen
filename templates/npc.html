@@ -7,7 +7,10 @@
     <title>An NPC!</title>
   </head>
      <div class="row">
-      <div class="column">{% include 'statblock_chunk.html' %}</div>
+      <div class="column">
+          {% include 'statblock_chunk.html' %}<br/>
+          seed = {{ seed }}
+      </div>
       <div class="column">
           {% include 'npc_form.html' %}
           <textarea name="text" cols="40" rows="15">

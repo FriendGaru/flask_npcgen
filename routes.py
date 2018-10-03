@@ -30,8 +30,8 @@ def npc():
     else:
         # for method == 'GET':
         seed = random_string(10)
-        race_choice = random.choice(npc_generator.get_options('race'))[0]
-        class_choice = random.choice(npc_generator.get_options('class'))[0]
+        race_choice = npc_generator.get_random_option('race')
+        class_choice = npc_generator.get_random_option('class')
         hd = random.randint(1, 20)
 
     new_npc = npc_generator.new_character(
@@ -53,5 +53,5 @@ def npc():
     class_options = npc_generator.get_options('class')
     hd_range = list(range(1, 21))
     new_seed = random_string(10)
-    return render_template('npc.html', seed=new_seed, stat_block=stat_block_dict, race_options=race_options,
+    return render_template('npc.html', seed=seed, new_seed=new_seed, stat_block=stat_block_dict, race_options=race_options,
                            class_options=class_options, hd_range=hd_range, plaintext=plaintext)
