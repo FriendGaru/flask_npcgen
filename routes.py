@@ -22,6 +22,13 @@ def npc():
     if not npc_generator:
         npc_generator = genny.NPCGenerator()
 
+    seed = ''
+    hd_num_choice = 0
+    hd_size_choice = 0
+    class_choice = 'NO CLASS CHOICE!!!'
+    race_choice = 'NO_RACE_CHOICE'
+    attribute_roll_method_choice = 'NO ATTRIBUTE ROLL METHOD'
+
     if request.method == 'GET':
         # for method == 'GET':
         valid = True
@@ -46,22 +53,38 @@ def npc():
             valid = False
             class_choice = npc_generator.get_random_option('class')
 
-        if request.args.get('hd') \
-                and npc_generator.validate_params(hd=request.args.get('hd')):
-            hd = int(request.args.get('hd'))
+        if request.args.get('attribute_roll_method_choice') \
+                and npc_generator.validate_params(roll_choice=request.args.get('attribute_roll_method_choice')):
+            attribute_roll_method_choice = request.args.get('attribute_roll_method_choice')
         else:
             valid = False
-            hd = random.randint(1, 20)
+            attribute_roll_method_choice = '3d6'
+
+        if request.args.get('hd_num_choice') \
+                and npc_generator.validate_params(hd=request.args.get('hd_num_choice')):
+            hd_num_choice = int(request.args.get('hd_num_choice'))
+        else:
+            valid = False
+            hd_num_choice = random.randint(1, 20)
+
+        if request.args.get('hd_size_choice'):
+            hd_size_choice = int(request.args.get('hd_size_choice'))
+        else:
+            valid = False
+            hd_size_choice = 8
 
         if not valid:
-            return redirect(url_for('npc', seed=seed, hd=str(hd),
-                                    race_choice=race_choice, class_choice=class_choice, ))
+            return redirect(url_for('npc', seed=seed,
+                                    hd_num_choice=str(hd_num_choice), hd_size_choice=str(hd_size_choice),
+                                    race_choice=race_choice, class_choice=class_choice,
+                                    attribute_roll_method_choice=attribute_roll_method_choice))
 
     new_npc = npc_generator.new_character(
         race_template_name=race_choice,
         class_template_name=class_choice,
+        attribute_roll_method=attribute_roll_method_choice,
         seed=seed,
-        hit_dice_num=hd,
+        hit_dice_num=int(hd_num_choice), hit_dice_size=int(hd_size_choice),
     )
 
     stat_block = new_npc.build_stat_block()
@@ -75,14 +98,24 @@ def npc():
 
     race_options = npc_generator.get_options('race')
     class_options = npc_generator.get_options('class')
-    hd_range = list(range(1, 21))
+    hd_num_options = [(str(x), str(x)) for x in range(1, 21)]
+    hd_size_options = [(4, 4), (6, 6), (8, 8), (10, 10), (12, 12)]
+    attribute_roll_method_options = npc_generator.roll_options
+
+    fresh_seed = random_string(10)
+
     return render_template('npc.html',
                            seed=seed,
+                           fresh_seed=fresh_seed,
                            stat_block=stat_block_dict,
                            race_options=race_options,
                            race_choice=race_choice,
                            class_options=class_options,
                            class_choice=class_choice,
-                           hd_range=hd_range,
-                           hd=str(hd),
+                           attribute_roll_method_options=attribute_roll_method_options,
+                           attribute_roll_method_choice=attribute_roll_method_choice,
+                           hd_num_options=hd_num_options,
+                           hd_num_choice=str(hd_num_choice),
+                           hd_size_choice=hd_size_choice,
+                           hd_size_options=hd_size_options,
                            plaintext=plaintext)

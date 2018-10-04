@@ -1,0 +1,20 @@
+{% macro select_menu(id, name, values, first_label='', starting_value='') -%}
+<select id="{{ id }}" name="{{ name }}">
+    {% if first_label == '' %}
+    <optgroup label="{{ name }}">
+    {% else %}
+    <optgroup label="{{ first_label }}">
+    {% endif %}
+    {% for value in values %}
+        {% if value[0] == "@CATEGORY" %}
+            </optgroup>>
+            <optgroup label="{{ value[1] }}">
+         {% elif value[0] == starting_value %}
+            <option value="{{ value[0] }}" selected>{{ value[1] }}</option>
+        {% else %}
+            <option value="{{ value[0] }}" >{{ value[1] }}</option>
+        {% endif %}
+    {% endfor %}
+    </optgroup>
+</select>
+{%- endmacro %}
