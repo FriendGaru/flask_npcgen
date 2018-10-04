@@ -1,8 +1,8 @@
-<form action="" method="post">
+<form action="" method="get">
     Seed:
-    <input type="text" id="seed" name="seed" value="{{new_seed}}"><br/>
+    <input type="text" id="seed" name="seed" value="{{seed}}"><br/>
     Race:
-    <select id="race" name="race">
+    <select id="race" name="race_choice">
         <optgroup label="Races">
         {% for race_option in race_options %}
             {% if race_option[0] == "@CATEGORY" %}
@@ -15,7 +15,7 @@
         </optgroup>>
     </select><br/>
     Class:
-    <select id="class" name="class">
+    <select id="class" name="class_choice">
     <optgroup label="Classes">
         {% for class_option in class_options %}
             {% if class_option[0] == "@CATEGORY" %}
@@ -28,10 +28,13 @@
     </optgroup>>
     </select><br/>
     HD:
-    <select id="hd" name="hd">
+    <select id="hd" name="hd" value="{{hd}}">
         {% for hd_num in hd_range %}
         <option value="{{hd_num}}">{{hd_num}}</option>
         {% endfor %}
     </select><br/>
     <button id="submit" type="submit" value="Submit">Submit</button>
 </form>
+<form action="" method="get">
+    <button id="submit_random" type="submit" value="Submit">New Random Guy!</button>
+</form>>
