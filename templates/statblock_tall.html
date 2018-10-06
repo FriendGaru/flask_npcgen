@@ -1,20 +1,12 @@
-<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:700" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>FG NPC</title>
-</head>
-<body>
-
-<div class="stat-block">
+<link rel="stylesheet" href="{{ url_for('static', filename='statblock5e.css') }}">
+<div class="stat-block wide">
 	<hr class="orange-border" />
 	<div class="section-left">
 		<div class="creature-heading">
 			<h1>{{ stat_block.name }}</h1>
-			<h2>{{ stat_block.size }} construct, unaligned</h2>
+			<h2>{{ stat_block.size }} {{ stat_block.creature_type }}, unaligned</h2>
 		</div> <!-- creature heading -->
 		<svg height="5" width="100%" class="tapered-rule">
 	    <polyline points="0,0 400,2.5 0,5"></polyline>
@@ -28,9 +20,13 @@
 				<h4>Hit Points</h4>
 				<p>{{ stat_block.hp }}</p>
 			</div> <!-- property line -->
-			<div class="property-line last">
+			<div class="property-line">
 				<h4>Speed</h4>
 				<p>{{ stat_block.speed }}</p>
+			</div> <!-- property line -->
+			<div class="property-line last">
+				<h4>Proficiency</h4>
+				<p>{{ stat_block.proficiency }}</p>
 			</div> <!-- property line -->
 			<svg height="5" width="100%" class="tapered-rule">
 	    <polyline points="0,0 400,2.5 0,5"></polyline>
@@ -64,26 +60,55 @@
 			<svg height="5" width="100%" class="tapered-rule">
 	    <polyline points="0,0 400,2.5 0,5"></polyline>
 	  </svg>
-			<div class="property-line first">
+            {% if stat_block.saves %}
+            <div class="property-line first">
+				<h4>Saves</h4>
+				<p>{{ stat_block.saves }}</p>
+			</div> <!-- property line -->
+            {% endif %}
+            {% if stat_block.skills %}
+            <div class="property-line">
+				<h4>Skills</h4>
+				<p>{{ stat_block.skills }}</p>
+			</div> <!-- property line -->
+            {% endif %}
+            {% if stat_block.damage_vulnerabilities %}
+            <div class="property-line">
+				<h4>Damage Vulnerabilities</h4>
+				<p>{{ stat_block.damage_vulnerabilities }}</p>
+			</div> <!-- property line -->
+            {% endif %}
+			{% if stat_block.damage_immunities %}
+            <div class="property-line">
 				<h4>Damage Immunities</h4>
-				<p>poison, psychic</p>
+				<p>{{ stat_block.damage_immunities }}</p>
 			</div> <!-- property line -->
-			<div class="property-line">
+            {% endif %}
+            {% if stat_block.damage_resistances %}
+            <div class="property-line">
+				<h4>Damage Resistances</h4>
+				<p>{{ stat_block.damage_resistances }}</p>
+			</div> <!-- property line -->
+            {% endif %}
+            {% if stat_block.condition_immunities %}
+            <div class="property-line">
 				<h4>Condition Immunities</h4>
-				<p>blinded, charmed, deafened, exhaustion, frightened,
-						petrified, poisoned</p>
+				<p>{{ stat_block.condition_immunities }}</p>
 			</div> <!-- property line -->
+            {% endif %}
 			<div class="property-line">
 				<h4>Senses</h4>
-				<p>blindsight 60ft. (blind beyond this radius), passive Perception 6</p>
+				<p>{{ stat_block.senses }}</p>
 			</div> <!-- property line -->
+            {% if stat_block.languages %}
 			<div class="property-line">
 				<h4>Languages</h4>
 				<p>{{ stat_block.languages }}</p>
 			</div> <!-- property line -->
+            {% endif %}
 			<div class="property-line last">
 				<h4>Challenge</h4>
-				<p>1 (200 XP)</p>
+				<p>{{ stat_block.cr }}</p>
 			</div> <!-- property line -->
 		</div> <!-- top stats -->
 		<svg height="5" width="100%" class="tapered-rule">
@@ -92,7 +117,13 @@
         {% for passive_trait in stat_block.passive_traits %}
 		<div class="property-block">
 			<h4>{{ passive_trait[0] }}.</h4>
-			<p>{{ passive_trait[1] }}</p>
+			<p>{{ passive_trait[1]|safe }}</p>
+		</div> <!-- property block -->
+        {% endfor %}
+		{% for spellcasting_trait in stat_block.spellcasting_traits %}
+		<div class="property-block">
+			<h4>{{ spellcasting_trait[0] }}.</h4>
+			<p>{{ spellcasting_trait[1]|safe }}</p>
 		</div> <!-- property block -->
         {% endfor %}
 	</div> <!-- section left -->
@@ -115,5 +146,3 @@
 	</div> <!-- section right -->
 	<hr class="orange-border bottom" />
 </div> <!-- stat block -->
-</body>
-</html>
