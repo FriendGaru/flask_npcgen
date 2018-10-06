@@ -1,30 +1,36 @@
 {% import 'macros/forms.html' as forms %}
 <form action="" method="get">
     Seed:
-    <input type="text" id="seed" name="seed" value="{{seed}}"><button onclick="fresh_seed()">New Seed</button>
+    <input type="text" id="seed" name="seed" value="{{seed}}"><button onclick="fresh_seed()"
+          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            New Seed</button>
     <script>
     function fresh_seed() {
         document.getElementById("seed").value = "{{ fresh_seed }}";
     }
-    </script><br/>
+    </script><br/><br/>
     Race:
     {{ forms.select_menu(id='race_select', name='race_choice', values=race_options,
         first_label= 'RACES', starting_value=race_choice) }}
     Class:
     {{ forms.select_menu(id='class_select', name='class_choice', values=class_options,
-        first_label= 'CLASSES', starting_value=class_choice) }}<br/>
+        first_label= 'CLASSES', starting_value=class_choice) }}<br/><br/>
     Attributes:
     {{ forms.select_menu(id='attribute_roll_method_select', name='attribute_roll_method_choice',
         values=attribute_roll_method_options,
-        first_label= 'ATTRIBUTE ROLL METHOD', starting_value=attribute_roll_method_choice) }}<br/>
+        first_label= 'ATTRIBUTE ROLL METHOD', starting_value=attribute_roll_method_choice) }}<br/><br/>
     HD:
     {{ forms.select_menu(id='hd_num_select', name='hd_num_choice', values=hd_num_options,
         first_label= 'HD', starting_value=hd_num_choice) }}
     d{{ forms.select_menu(id='hd_size_select', name='hd_size_choice', values=hd_size_options,
         first_label= 'd', starting_value=hd_size_choice) }}
-    <button id="submit" type="submit" value="Submit">Build This Guy!</button>
-</form><br/>
+    <button id="submit" type="submit" value="Submit"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Build This Guy!</button>
+</form><br/><br/>
 <form action="" method="get">
-    <button id="submit_random" type="submit" value="Submit">New Random Guy!</button>
+    <button id="submit_random" type="submit" value="Submit"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                New Random Guy!</button>
 </form>
 
