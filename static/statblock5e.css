@@ -16,14 +16,14 @@ body *{
   display: inline-block;
   vertical-align: top;
   width: 17%;
-  min-width:280px;
+  min-width:380px;
   background: #FDF1DC;
   padding: 5px 10px 20px;
   box-shadow: 0 0 1.5em #867453;
 }
 .stat-block.wide{
   width: 46.5%;
-  min-width: 560px;
+  min-width: 760px;
   text-align: center;
 }
 .stat-block.wide .section-left,
