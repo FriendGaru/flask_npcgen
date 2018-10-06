@@ -13,7 +13,11 @@ def random_string(length):
 
 @app.route('/')
 def hello():
-    return 'hello'
+    return redirect(url_for('npc'))
+
+@app.route('/')
+def test():
+    return "Server is up."
 
 
 @app.route('/npc', methods=['GET'])
@@ -104,7 +108,7 @@ def npc():
 
     fresh_seed = random_string(10)
 
-    return render_template('npc.html',
+    return render_template('main.html',
                            seed=seed,
                            fresh_seed=fresh_seed,
                            stat_block=stat_block_dict,

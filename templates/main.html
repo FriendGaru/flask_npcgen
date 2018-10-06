@@ -1,10 +1,6 @@
-<!doctype html>
-<html>
-  <head>
-
-    <title>An NPC!</title>
-  </head>
-     <div class="row">
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
       <div class="column">
           {% include 'statblock_chunk.html' %}<br/>
       </div>
@@ -15,9 +11,4 @@
           </textarea>
       </div>
     </div>
-  <div>
-
-
-  </div>
-  </body>
-</html>
+{% endblock %}
