@@ -120,6 +120,12 @@
 			<p>{{ passive_trait[1]|safe }}</p>
 		</div> <!-- property block -->
         {% endfor %}
+		{% for spellcasting_trait in stat_block.spellcasting_traits %}
+		<div class="property-block">
+			<h4>{{ spellcasting_trait[0] }}.</h4>
+			<p>{{ spellcasting_trait[1]|safe }}</p>
+		</div> <!-- property block -->
+        {% endfor %}
 	</div> <!-- section left -->
 	<div class="section-right">
 		<div class="actions">

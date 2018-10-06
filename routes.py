@@ -95,10 +95,15 @@ def npc():
     plaintext = stat_block.plain_text()
     stat_block_dict = stat_block.get_dict()
 
-    html_traits = []
+    html_passive_traits = []
     for entry in stat_block_dict['passive_traits']:
-        html_traits.append((entry[0], entry[1].replace("\n", "<br/>")))
-    stat_block_dict['passive_traits'] = html_traits
+        html_passive_traits.append((entry[0], entry[1].replace("\n", "<br/>")))
+    stat_block_dict['passive_traits'] = html_passive_traits
+
+    html_spellcasting_traits = []
+    for entry in stat_block_dict['spellcasting_traits']:
+        html_spellcasting_traits.append((entry[0], entry[1].replace("\n", "<br/>")))
+    stat_block_dict['spellcasting_traits'] = html_spellcasting_traits
 
     race_options = npc_generator.get_options('race')
     class_options = npc_generator.get_options('class')

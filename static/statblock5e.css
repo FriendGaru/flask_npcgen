@@ -103,6 +103,7 @@ body *{
 }
 .property-line h4{
   color: #7A200D;
+  font-weight: bold;
 }
 .property-line{
   text-indent: -1em;
@@ -133,6 +134,7 @@ body *{
   line-height: 1.2em;
   text-transform: uppercase;
   color: #7A200D;
+  font-weight: bold;
 }
 .abilities p{
   margin: 0 0 10px;
@@ -146,6 +148,7 @@ body *{
   margin: 0;
 }
 .property-block h4{
+  font-weight: bold;
   font-style: italic;
 }
 .property-block{
