@@ -71,11 +71,14 @@ def npc():
             valid = False
             hd_num_choice = random.randint(1, 20)
 
-        if request.args.get('hd_size_choice'):
-            hd_size_choice = int(request.args.get('hd_size_choice'))
+        if request.args.get('hd_size_choice') \
+                and npc_generator.validate_params(hd_size=request.args.get('hd_size_choice')):
+            hd_size_choice = request.args.get('hd_size_choice')
+            if hd_size_choice != 'Default':
+                hd_size_choice = int(request.args.get('hd_size_choice'))
         else:
             valid = False
-            hd_size_choice = 8
+            hd_size_choice = 'Default'
 
         if not valid:
             return redirect(url_for('npc', seed=seed,
@@ -88,7 +91,7 @@ def npc():
         class_template_name=class_choice,
         attribute_roll_method=attribute_roll_method_choice,
         seed=seed,
-        hit_dice_num=int(hd_num_choice), hit_dice_size=int(hd_size_choice),
+        hit_dice_num=int(hd_num_choice), hit_dice_size=hd_size_choice,
     )
 
     stat_block = new_npc.build_stat_block()
@@ -108,7 +111,9 @@ def npc():
     race_options = npc_generator.get_options('race')
     class_options = npc_generator.get_options('class')
     hd_num_options = [(str(x), str(x)) for x in range(1, 21)]
-    hd_size_options = [(4, 4), (6, 6), (8, 8), (10, 10), (12, 12)]
+    # hd_size_options = [(4, 4), (6, 6), (8, 8), (10, 10), (12, 12)]
+    hd_size_options = [(str(x), str(x))for x in npc_generator.hd_size_options]
+    print(hd_size_options)
     attribute_roll_method_options = npc_generator.roll_options
 
     fresh_seed = random_string(10)
@@ -125,6 +130,6 @@ def npc():
                            attribute_roll_method_choice=attribute_roll_method_choice,
                            hd_num_options=hd_num_options,
                            hd_num_choice=str(hd_num_choice),
-                           hd_size_choice=hd_size_choice,
+                           hd_size_choice=str(hd_size_choice),
                            hd_size_options=hd_size_options,
                            plaintext=plaintext)
