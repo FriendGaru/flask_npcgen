@@ -9,7 +9,7 @@
         {% if value[0] == "@CATEGORY" %}
             </optgroup>>
             <optgroup label="{{ value[1] }}">
-         {% elif value[0] == starting_value %}
+         {% elif value[0]|string == starting_value|string %}
             <option value="{{ value[0] }}" selected>{{ value[1] }}</option>
         {% else %}
             <option value="{{ value[0] }}" >{{ value[1] }}</option>

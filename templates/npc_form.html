@@ -1,7 +1,7 @@
 {% import 'macros/forms.html' as forms %}
 <form action="" method="get">
     Seed:
-    <input type="text" id="seed" name="seed" value="{{seed}}"><button onclick="fresh_seed()"
+    <input type="text" id="seed" name="seed" value="{{ npc_request['seed'] }}"><button onclick="fresh_seed()"
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
             New Seed</button>
     <script>
@@ -10,20 +10,21 @@
     }
     </script><br/><br/>
     Race:
-    {{ forms.select_menu(id='race_select', name='race_choice', values=race_options,
-        first_label= 'RACES', starting_value=race_choice) }}
+    {{ forms.select_menu(id='race_select', name='race_choice', values=form_options['race_options'],
+        first_label= 'RACES', starting_value=npc_request['race_choice']) }}
     Class:
-    {{ forms.select_menu(id='class_select', name='class_choice', values=class_options,
-        first_label= 'CLASSES', starting_value=class_choice) }}<br/><br/>
+    {{ forms.select_menu(id='class_select', name='class_choice', values=form_options['class_options'],
+        first_label= 'CLASSES', starting_value=npc_request['class_choice']) }}<br/><br/>
     Attributes:
-    {{ forms.select_menu(id='attribute_roll_method_select', name='attribute_roll_method_choice',
-        values=attribute_roll_method_options,
-        first_label= 'ATTRIBUTE ROLL METHOD', starting_value=attribute_roll_method_choice) }}<br/><br/>
+    {{ forms.select_menu(id='attribute_roll_method', name='attribute_roll_method',
+        values=form_options['attribute_roll_options'],
+        first_label= 'ATTRIBUTE ROLL METHOD', starting_value=npc_request['attribute_roll_method']) }}<br/><br/>
     HD:
-    {{ forms.select_menu(id='hd_num_select', name='hd_num_choice', values=hd_num_options,
-        first_label= 'HD', starting_value=hd_num_choice) }}
-    d{{ forms.select_menu(id='hd_size_select', name='hd_size_choice', values=hd_size_options,
-        first_label= 'd', starting_value=hd_size_choice) }}
+    {{ forms.select_menu(id='hd_num_select', name='hit_dice_num', values=form_options['hit_dice_num_options'],
+        first_label= 'HD', starting_value=npc_request['hit_dice_num']) }}
+    d{{ forms.select_menu(id='hd_size_select', name='hit_dice_size', values=form_options['hit_dice_size_options'],
+        first_label= 'd', starting_value=npc_request['hit_dice_size']) }}
+
     <button id="submit" type="submit" value="Submit"
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Build This Guy!</button>
