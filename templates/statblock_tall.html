@@ -130,6 +130,12 @@
 	<div class="section-right">
 		<div class="actions">
 			<h3>Actions</h3>
+			{% for multiattack in stat_block.multiattack %}
+			<div class="property-block">
+				<h4>{{multiattack[0]}}.</h4>
+				<p>{{multiattack[1]}}</p>
+			</div> <!-- property block -->
+            {% endfor %}
             {% for action in stat_block.action %}
 			<div class="property-block">
 				<h4>{{action[0]}}.</h4>
