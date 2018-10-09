@@ -9,3 +9,18 @@
     display: table;
     clear: both;
 }
+
+.seedfield{
+    width:100%;
+    max-width:100px;
+}
+
+.bigselector{
+    width:50%;
+    max-width:175px;
+}
+
+.smallselector{
+    width:25%;
+    max-width:80px;
+}
