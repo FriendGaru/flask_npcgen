@@ -1,4 +1,4 @@
-{% macro select_menu(id, name, values, first_label='', starting_value='') -%}
+{% macro vanilla_select_menu(id, name, values, first_label='', starting_value='') -%}
 <select id="{{ id }}" name="{{ name }}">
     {% if first_label == '' %}
     <optgroup label="{{ name }}">
@@ -18,3 +18,34 @@
     </optgroup>
 </select>
 {%- endmacro %}
+
+{% macro select_menu(id, name, values, floating_label='', starting_value='', size='normal') -%}
+    {% if size == 'normal' %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label bigselector">
+    {% elif size == 'small' %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label smallselector">
+    {% else %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    {% endif %}
+    <select class="mdl-textfield__input" id="{{id}}" name="{{name}}" >
+        <optgroup label="{{ floating_label }}">
+        {% for value in values %}
+            {% if value[0] == "@CATEGORY" %}
+                </optgroup>>
+                <optgroup label="{{ value[1] }}">
+             {% elif value[0]|string == starting_value|string %}
+                <option value="{{value[0]}}" selected>{{value[1]}}</option>
+            {% else %}
+                <option value="{{value[0]}}">{{value[1]}}</option>
+            {% endif %}
+        {% endfor %}
+        </optgroup>
+        </select>
+        {% if floating_label == '' %}
+    <label class="mdl-textfield__label" for="{{id}}">{{name}}</label>
+    {% else %}
+    <label class="mdl-textfield__label" for="{{id}}">{{floating_label}}</label>
+    {% endif %}
+  </div>
+{%- endmacro %}
+
