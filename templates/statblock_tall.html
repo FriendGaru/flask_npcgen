@@ -120,6 +120,12 @@
 			<p>{{ passive_trait[1]|safe }}</p>
 		</div> <!-- property block -->
         {% endfor %}
+		{% if stat_block.hidden_traits %}
+		<div class="property-block">
+			<h4>Hidden Traits.</h4>
+			<p>{{ stat_block.hidden_traits }}</p>
+		</div> <!-- property block -->
+		{% endif %}
 		{% for spellcasting_trait in stat_block.spellcasting_traits %}
 		<div class="property-block">
 			<h4>{{ spellcasting_trait[0] }}.</h4>
@@ -136,16 +142,16 @@
 				<p>{{multiattack[1]}}</p>
 			</div> <!-- property block -->
             {% endfor %}
-            {% for action in stat_block.action %}
-			<div class="property-block">
-				<h4>{{action[0]}}.</h4>
-				<p>{{action[1]}}</p>
-			</div> <!-- property block -->
-            {% endfor %}
             {% for attack in stat_block.attacks %}
 			<div class="property-block">
 				<h4>{{attack[0]}}.</h4>
 				<p>{{attack[1]}}</p>
+			</div> <!-- property block -->
+            {% endfor %}
+			{% for action in stat_block.actions %}
+			<div class="property-block">
+				<h4>{{action[0]}}.</h4>
+				<p>{{action[1]}}</p>
 			</div> <!-- property block -->
             {% endfor %}
 		</div> <!-- actions -->
