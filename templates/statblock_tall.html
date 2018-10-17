@@ -155,6 +155,17 @@
 			</div> <!-- property block -->
             {% endfor %}
 		</div> <!-- actions -->
+		{% if stat_block.reactions %}
+		<div class="actions">
+			<h3>Reactions</h3>
+			{% for reaction in stat_block.reactions %}
+			<div class="property-block">
+				<h4>{{reaction[0]}}.</h4>
+				<p>{{reaction[1]}}</p>
+			</div> <!-- property block -->
+            {% endfor %}
+		</div>
+		{% endif %}
 	</div> <!-- section right -->
 	<hr class="orange-border bottom" />
 </div> <!-- stat block -->
