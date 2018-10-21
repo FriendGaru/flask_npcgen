@@ -2,7 +2,7 @@ from flask import Flask, url_for, request, render_template, redirect
 import random
 import string
 from flask_npcgen import app
-import npcgen.npcgen as genny
+from npcgen.npcgen import npcgen_main
 
 npc_generator = None
 
@@ -15,6 +15,7 @@ def random_string(length):
 def hello():
     return redirect(url_for('npc'))
 
+
 @app.route('/')
 def test():
     return "Server is up."
@@ -24,7 +25,7 @@ def test():
 def npc():
     global npc_generator
     if not npc_generator:
-        npc_generator = genny.NPCGenerator()
+        npc_generator = npcgen_main.NPCGenerator()
 
     if not request.method == 'GET':
         return redirect(url_for('npc',))
