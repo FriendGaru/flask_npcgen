@@ -1,0 +1,29 @@
+{% macro select_menu_categories(id, name, values_dict, floating_label='', starting_value='', size='normal') -%}
+    {% if size == 'big' %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label bigselector">
+    {% elif size == 'small' %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label smallselector">
+    {% else %}
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    {% endif %}
+    <select class="mdl-textfield__input" id="{{id}}" name="{{name}}" >
+        {% for category in values_dict.keys() %}
+        <optgroup label="{{category}}">
+            {% for option in values_dict[category] %}
+            {% if option.int_name|string == starting_value|string %}
+                <option value="{{option.int_name}}" selected>{{option.display}}</option>
+            {% else %}
+                <option value="{{option.int_name}}">{{option.display}}</option>
+            {% endif %}
+            {% endfor %}
+        </optgroup>>
+        {% endfor %}
+    </select>
+    {% if floating_label == '' %}
+    <label class="mdl-textfield__label" for="{{id}}">{{name}}</label>
+    {% else %}
+    <label class="mdl-textfield__label" for="{{id}}">{{floating_label}}</label>
+    {% endif %}
+  </div>
+{%- endmacro %}
+

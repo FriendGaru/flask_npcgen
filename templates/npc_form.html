@@ -1,3 +1,82 @@
+<script>
+var character_build_options = {{character_build_options.jsonify()|safe}}
+
+var starting_race = "{{npc_request['race_choice']}}"
+var starting_race_arg_one = "{{npc_request.get('race_arg_one', '')}}"
+var starting_race_arg_two = "{{npc_request.get('race_arg_two', '')}}"
+
+var starting_class = "{{npc_request['class_choice']}}"
+var starting_class_arg_one = "{{npc_request.get('class_arg_one', '')}}"
+var starting_class_arg_two = "{{npc_request.get('class_arg_two', '')}}"
+
+function change_race(race_name) {
+    var race_arg_one_div = document.getElementById("race_arg_one_menu_div")
+    race_arg_one_div.innerHTML = ""
+    if (character_build_options.race_options.hasOwnProperty(race_name)
+        && character_build_options.race_options[race_name].hasOwnProperty("arg_one_label")) {
+
+        var arg_one_options = character_build_options.race_options[race_name].arg_one_options;
+        var arg_one_label = character_build_options.race_options[race_name].arg_one_label;
+        race_arg_one_div.innerHTML = build_menu("race_arg_one", "race_arg_one_menu",
+            arg_one_label, arg_one_options, arg_one_options, starting_race_arg_one)
+    }
+    if (character_build_options.race_options.hasOwnProperty(race_name)
+        && character_build_options.race_options[race_name].hasOwnProperty("arg_two_label")) {
+
+        var arg_two_options = character_build_options.race_options[race_name].arg_two_options;
+        var arg_two_label = character_build_options.race_options[race_name].arg_two_label;
+        race_arg_two_div.innerHTML = build_menu("race_arg_two", "race_arg_two_menu",
+            arg_two_label, arg_two_options, arg_two_options, starting_race_arg_two)
+    }
+    componentHandler.upgradeDom();
+}
+
+function change_class(class_name) {
+    var class_arg_one_div = document.getElementById("class_arg_one_menu_div")
+    class_arg_one_div.innerHTML = ""
+    if (character_build_options.class_options.hasOwnProperty(class_name)
+        && character_build_options.class_options[class_name].hasOwnProperty("arg_one_label")) {
+
+        var arg_one_options = character_build_options.class_options[class_name].arg_one_options;
+        var arg_one_label = character_build_options.class_options[class_name].arg_one_label;
+        class_arg_one_div.innerHTML = build_menu("class_arg_one", "class_arg_one_menu",
+            arg_one_label, arg_one_options, arg_one_options, starting_class_arg_one)
+    }
+    if (character_build_options.class_options.hasOwnProperty(class_name)
+        && character_build_options.class_options[class_name].hasOwnProperty("arg_two_label")) {
+
+        var arg_two_options = character_build_options.class_options[class_name].arg_two_options;
+        var arg_two_label = character_build_options.class_options[class_name].arg_two_label;
+        class_arg_two_div.innerHTML = build_menu("class_arg_two", "class_arg_two_menu",
+            arg_two_label, arg_two_options, arg_two_options, starting_class_arg_two)
+    }
+    componentHandler.upgradeDom();
+}
+
+
+function build_menu(menu_name, menu_id, menu_label, option_values, option_labels, starting_value) {
+    menu_html = ""
+    menu_html += '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">';
+    menu_html += '<select class="mdl-textfield__input" name="' + menu_name + '" id="' + menu_id + '">';
+    for (var i = 0; i < option_values.length; i++) {
+        if (option_values[i] == starting_value){
+            menu_html += '<option value="' + option_values[i] + '" selected>' + option_labels[i] + '</option>'
+        } else {
+            menu_html += '<option value="' + option_values[i] + '">' + option_labels[i] + '</option>'
+        }
+    }
+    menu_html += '</select>';
+    menu_html += '<label class="mdl-textfield__label" for="' + menu_id + '">' + menu_label + '</label>'
+    <!--window.alert(menu_html);-->
+    menu_html += '</div>'
+    return menu_html
+}
+
+window.onload = function() {
+  change_race(starting_race);
+  change_class(starting_class);
+};
+</script>
 {% import 'macros/forms.html' as forms %}
 <form action="" method="get">
       <div class="mdl-textfield mdl-js-textfield seedfield">
@@ -13,18 +92,30 @@
     }
     </script>
     <br/>
-    {{ forms.select_menu(id='race_select', name='race_choice', values=form_options['race_options'],
-        floating_label= 'Race', starting_value=npc_request['race_choice'], size='normal') }}
-    {{ forms.select_menu(id='class_select', name='class_choice', values=form_options['class_options'],
-        floating_label= 'Class', starting_value=npc_request['class_choice'], size='normal') }}<br/>
-    {{ forms.select_menu(id='attribute_roll_method', name='attribute_roll_method',
-        values=form_options['attribute_roll_options'],
-        floating_label= 'Attribute Roll Method', starting_value=npc_request['attribute_roll_method'],
-        size='normal') }}<br/>
-    {{ forms.select_menu(id='hd_num_select', name='hit_dice_num', values=form_options['hit_dice_num_options'],
-        floating_label= 'Hit Dice', starting_value=npc_request['hit_dice_num'], size='small') }}
-    {{ forms.select_menu(id='hd_size_select', name='hit_dice_size', values=form_options['hit_dice_size_options'],
-        floating_label= 'Hit Dice Size', starting_value=npc_request['hit_dice_size'], size='small') }}
+    {{ forms.mdl_select_menu_categories(id='race_select', name='race_choice',
+        values_dict=character_build_options.race_options,
+        floating_label= 'Race', starting_value=npc_request['race_choice'], size='normal',
+        on_change='change_race(this.value);') }}
+    <div id="race_arg_one_menu_div"></div><div id="race_arg_two_menu_div"></div>
+    <br/>
+    {{ forms.mdl_select_menu_categories(id='class_select', name='class_choice',
+        values_dict=character_build_options.class_options,
+        floating_label= 'Class', starting_value=npc_request['class_choice'], size='normal',
+        on_change='change_class(this.value);') }}
+    <div id="class_arg_one_menu_div"></div><div id="class_arg_two_menu_div"></div>
+    <br/>
+    {{ forms.mdl_select_menu_categories(id='roll_method_select', name='attribute_roll_method',
+        values_dict=character_build_options.roll_options,
+        floating_label= 'Roll Method', starting_value=npc_request.get('attribute_roll_method', ''), size='normal', ) }}
+    <br/>
+    {{ forms.mdl_select_menu_list(id='hit_dice_num_select', name='hit_dice_num',
+        values_list=character_build_options.hd_options,
+        floating_label= 'HD', starting_value=npc_request.get('hit_dice_num', ''), size='small', ) }}
+    {{ forms.mdl_select_menu_list(id='hit_dice_size_select', name='hit_dice_size',
+        values_list=character_build_options.hd_size_options,
+        floating_label= 'HD Size', starting_value=npc_request.get('hit_dice_size', ''), size='small', ) }}
+
+
     <button id="submit" type="submit" value="Submit"
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
         Build This Guy!</button>
