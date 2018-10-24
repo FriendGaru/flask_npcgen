@@ -1,0 +1,43 @@
+{% import 'macros/forms.html' as forms %}
+<form action="" method="get">
+      <div class="mdl-textfield mdl-js-textfield seedfield">
+        <input class="mdl-textfield__input" type="text" id="seed_field" name="seed" value="{{ npc_request['seed'] }}">
+        <label class="mdl-textfield__label" for="seed_field">seed</label>
+      </div>
+        <button onclick="fresh_seed()"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        New Seed</button>
+    <script>
+    function fresh_seed() {
+        document.getElementById("seed_field").value = "{{ fresh_seed }}";
+    }
+    </script>
+    <br/>
+    <!--{{ forms.select_menu(id='race_select', name='race_choice', values=form_options['race_options'],-->
+        <!--floating_label= 'Race', starting_value=npc_request['race_choice'], size='normal') }}-->
+    <!--{{ forms.select_menu(id='class_select', name='class_choice', values=form_options['class_options'],-->
+        <!--floating_label= 'Class', starting_value=npc_request['class_choice'], size='normal') }}<br/>-->
+    {{ forms.select_menu_categories(id='class_select', name='class_choice',
+        values_dict=character_build_options.class_options,
+        floating_label= 'Class', starting_value=npc_request['class_choice'], size='normal') }}
+
+    <!--{{ forms.select_menu(id='attribute_roll_method', name='attribute_roll_method',-->
+        <!--values=form_options['attribute_roll_options'],-->
+        <!--floating_label= 'Attribute Roll Method', starting_value=npc_request['attribute_roll_method'],-->
+        <!--size='normal') }}<br/>-->
+
+    <!--{{ forms.select_menu(id='hd_num_select', name='hit_dice_num', values=form_options['hit_dice_num_options'],-->
+        <!--floating_label= 'Hit Dice', starting_value=npc_request['hit_dice_num'], size='small') }}-->
+
+    <!--{{ forms.select_menu(id='hd_size_select', name='hit_dice_size', values=form_options['hit_dice_size_options'],-->
+        <!--floating_label= 'Hit Dice Size', starting_value=npc_request['hit_dice_size'], size='small') }}-->
+
+    <button id="submit" type="submit" value="Submit"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Build This Guy!</button>
+</form><br/><br/>
+<form action="" method="get">
+    <button id="submit_random" type="submit" value="Submit"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                New Random Guy!</button>
+</form>

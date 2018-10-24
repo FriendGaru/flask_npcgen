@@ -2,9 +2,10 @@ from flask import Flask, url_for, request, render_template, redirect
 import random
 import string
 from flask_npcgen import app
-import npcgen.npcgen as genny
+from npcgen.npcgen import npcgen_main
 
 npc_generator = None
+character_build_options = None
 
 
 def random_string(length):
@@ -15,6 +16,7 @@ def random_string(length):
 def hello():
     return redirect(url_for('npc'))
 
+
 @app.route('/')
 def test():
     return "Server is up."
@@ -23,8 +25,11 @@ def test():
 @app.route('/npc', methods=['GET'])
 def npc():
     global npc_generator
+    global character_build_options
     if not npc_generator:
-        npc_generator = genny.NPCGenerator()
+        print("NPCGenerator not found, building new one.")
+        npc_generator = npcgen_main.NPCGenerator()
+        character_build_options = npc_generator.content_source.get_character_build_options()
 
     if not request.method == 'GET':
         return redirect(url_for('npc',))
@@ -50,13 +55,15 @@ def npc():
         html_spellcasting_traits.append((entry[0], entry[1].replace("\n", "<br/>")))
     stat_block_dict['spellcasting_traits'] = html_spellcasting_traits
 
-    form_options = npc_generator.get_options_dict()
+    # form_options = npc_generator.get_options_dict()
 
     fresh_seed = random_string(10)
 
     return render_template('main.html',
+                           character_build_options=character_build_options,
                            fresh_seed=fresh_seed,
                            stat_block=stat_block_dict,
                            plaintext=plaintext,
                            npc_request=clean_request,
-                           form_options=form_options,)
+                           # form_options=form_options,
+                           )
