@@ -1,68 +1,64 @@
 <script>
-var character_build_options = {{character_build_options.jsonify()|safe}}
+var build_options = {{build_options_json|safe}}
 
 var starting_race = "{{npc_request['race_choice']}}"
-var starting_race_arg_one = "{{npc_request.get('race_arg_one', '')}}"
-var starting_race_arg_two = "{{npc_request.get('race_arg_two', '')}}"
+var starting_subrace_choice = "{{npc_request.get('subrace_choice', '')}}"
 
 var starting_class = "{{npc_request['class_choice']}}"
-var starting_class_arg_one = "{{npc_request.get('class_arg_one', '')}}"
-var starting_class_arg_two = "{{npc_request.get('class_arg_two', '')}}"
+var starting_subclass_primary_choice = "{{npc_request.get('subclass_primary_choice', '')}}"
+var starting_subclass_secondary_choice = "{{npc_request.get('subclass_secondary_choice', '')}}"
 
 function change_race(race_name) {
-    var race_arg_one_div = document.getElementById("race_arg_one_menu_div")
-    race_arg_one_div.innerHTML = ""
-    if (character_build_options.race_options.hasOwnProperty(race_name)
-        && character_build_options.race_options[race_name].hasOwnProperty("arg_one_label")) {
+    var subrace_choice_div = document.getElementById("subrace_choice_menu_div")
+    subrace_choice_div.innerHTML = ""
+    if (build_options.race_options.hasOwnProperty(race_name)
+        && build_options.race_options[race_name].hasOwnProperty("subraces")) {
 
-        var arg_one_options = character_build_options.race_options[race_name].arg_one_options;
-        var arg_one_label = character_build_options.race_options[race_name].arg_one_label;
-        race_arg_one_div.innerHTML = build_menu("race_arg_one", "race_arg_one_menu",
-            arg_one_label, arg_one_options, arg_one_options, starting_race_arg_one)
-    }
-    if (character_build_options.race_options.hasOwnProperty(race_name)
-        && character_build_options.race_options[race_name].hasOwnProperty("arg_two_label")) {
-
-        var arg_two_options = character_build_options.race_options[race_name].arg_two_options;
-        var arg_two_label = character_build_options.race_options[race_name].arg_two_label;
-        race_arg_two_div.innerHTML = build_menu("race_arg_two", "race_arg_two_menu",
-            arg_two_label, arg_two_options, arg_two_options, starting_race_arg_two)
+        var subrace_options = build_options.race_options[race_name].subraces;
+        var subrace_label = build_options.race_options[race_name].subrace_label;
+        subrace_choice_div.innerHTML = build_menu("subrace_choice", "subrace_choice_menu",
+            subrace_label, subrace_options, starting_subrace_choice)
     }
     componentHandler.upgradeDom();
 }
 
-function change_class(class_name) {
-    var class_arg_one_div = document.getElementById("class_arg_one_menu_div")
-    class_arg_one_div.innerHTML = ""
-    if (character_build_options.class_options.hasOwnProperty(class_name)
-        && character_build_options.class_options[class_name].hasOwnProperty("arg_one_label")) {
+function change_class(class_name){
+    var subclass_primary_choice_div = document.getElementById("subclass_primary_choice_menu_div")
+    subclass_primary_choice_div.innerHTML = ""
+    if (build_options.class_options.hasOwnProperty(class_name)
+        && build_options.class_options[class_name].hasOwnProperty("subclasses_primary")) {
 
-        var arg_one_options = character_build_options.class_options[class_name].arg_one_options;
-        var arg_one_label = character_build_options.class_options[class_name].arg_one_label;
-        class_arg_one_div.innerHTML = build_menu("class_arg_one", "class_arg_one_menu",
-            arg_one_label, arg_one_options, arg_one_options, starting_class_arg_one)
+        var subclass_primary_options = build_options.class_options[class_name].subclasses_primary;
+        var subclass_primary_label = build_options.class_options[class_name].subclass_primary_label;
+        subclass_primary_choice_div.innerHTML = build_menu("subclass_primary_choice", "subclass_primary_choice_menu",
+            subclass_primary_label, subclass_primary_options, starting_subclass_primary_choice)
     }
-    if (character_build_options.class_options.hasOwnProperty(class_name)
-        && character_build_options.class_options[class_name].hasOwnProperty("arg_two_label")) {
+    var subclass_secondary_choice_div = document.getElementById("subclass_secondary_choice_menu_div")
+    subclass_secondary_choice_div.innerHTML = ""
+    if (build_options.class_options.hasOwnProperty(class_name)
+        && build_options.class_options[class_name].hasOwnProperty("subclasses_secondary")) {
 
-        var arg_two_options = character_build_options.class_options[class_name].arg_two_options;
-        var arg_two_label = character_build_options.class_options[class_name].arg_two_label;
-        class_arg_two_div.innerHTML = build_menu("class_arg_two", "class_arg_two_menu",
-            arg_two_label, arg_two_options, arg_two_options, starting_class_arg_two)
+        var subclass_secondary_options = build_options.class_options[class_name].subclasses_secondary;
+        var subclass_secondary_label = build_options.class_options[class_name].subclass_secondary_label;
+        subclass_secondary_choice_div.innerHTML = build_menu("subclass_secondary_choice", "subclass_secondary_choice_menu",
+            subclass_secondary_label, subclass_secondary_options, starting_subclass_secondary_choice)
     }
     componentHandler.upgradeDom();
 }
 
-
-function build_menu(menu_name, menu_id, menu_label, option_values, option_labels, starting_value) {
+function build_menu(menu_name, menu_id, menu_label, options_dict, starting_value) {
     menu_html = ""
     menu_html += '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">';
     menu_html += '<select class="mdl-textfield__input" name="' + menu_name + '" id="' + menu_id + '">';
-    for (var i = 0; i < option_values.length; i++) {
-        if (option_values[i] == starting_value){
-            menu_html += '<option value="' + option_values[i] + '" selected>' + option_labels[i] + '</option>'
+    for (option_key in options_dict) {
+        display = option_key
+        if (options_dict[option_key].hasOwnProperty("display")){
+            display = options_dict[option_key]["display"]
+        }
+        if (option_key == starting_value){
+            menu_html += '<option value="' + option_key + '" selected>' + display + '</option>'
         } else {
-            menu_html += '<option value="' + option_values[i] + '">' + option_labels[i] + '</option>'
+            menu_html += '<option value="' + option_key + '">' + display + '</option>'
         }
     }
     menu_html += '</select>';
@@ -92,28 +88,29 @@ window.onload = function() {
     }
     </script>
     <br/>
-    {{ forms.mdl_select_menu_categories(id='race_select', name='race_choice',
-        values_dict=character_build_options.race_options,
+    {{ forms.mdl_menu(id='race_select', name='race_choice',
+        options_dict=build_options['race_options'], categories_list=build_options['race_categories'],
         floating_label= 'Race', starting_value=npc_request['race_choice'], size='normal',
         on_change='change_race(this.value);') }}
-    <div id="race_arg_one_menu_div"></div><div id="race_arg_two_menu_div"></div>
+    <div id="subrace_choice_menu_div"></div>
     <br/>
-    {{ forms.mdl_select_menu_categories(id='class_select', name='class_choice',
-        values_dict=character_build_options.class_options,
+    {{ forms.mdl_menu(id='class_select', name='class_choice',
+        options_dict=build_options['class_options'], categories_list=build_options['class_categories'],
         floating_label= 'Class', starting_value=npc_request['class_choice'], size='normal',
         on_change='change_class(this.value);') }}
-    <div id="class_arg_one_menu_div"></div><div id="class_arg_two_menu_div"></div>
+    <div id="subclass_primary_choice_menu_div"></div><div id="subclass_secondary_choice_menu_div"></div>
     <br/>
-    {{ forms.mdl_select_menu_categories(id='roll_method_select', name='attribute_roll_method',
-        values_dict=character_build_options.roll_options,
-        floating_label= 'Roll Method', starting_value=npc_request.get('attribute_roll_method', ''), size='normal', ) }}
+    {{ forms.mdl_menu(id='roll_method_select', name='attribute_roll_method',
+        options_dict=build_options['roll_method_options'], categories_list=build_options['roll_method_categories'],
+        floating_label= 'Roll Method', starting_value=npc_request['attribute_roll_method'], size='normal')}}
     <br/>
-    {{ forms.mdl_select_menu_list(id='hit_dice_num_select', name='hit_dice_num',
-        values_list=character_build_options.hd_options,
-        floating_label= 'HD', starting_value=npc_request.get('hit_dice_num', ''), size='small', ) }}
-    {{ forms.mdl_select_menu_list(id='hit_dice_size_select', name='hit_dice_size',
-        values_list=character_build_options.hd_size_options,
-        floating_label= 'HD Size', starting_value=npc_request.get('hit_dice_size', ''), size='small', ) }}
+    {{ forms.mdl_menu(id='hd_num_select', name='hit_dice_num',
+        options_dict=build_options['hd_num_options'], categories_list=None,
+        floating_label= 'HD', starting_value=npc_request['hit_dice_num'], size='small')}}
+    {{ forms.mdl_menu(id='hd_size_select', name='hit_dice_size',
+        options_dict=build_options['hd_size_options'], categories_list=None,
+        floating_label= 'HD Size', starting_value=npc_request['hit_dice_size'], size='small')}}
+
 
 
     <button id="submit" type="submit" value="Submit"
@@ -125,3 +122,4 @@ window.onload = function() {
             class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                 New Random Guy!</button>
 </form>
+

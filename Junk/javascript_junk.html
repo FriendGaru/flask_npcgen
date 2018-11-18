@@ -1,0 +1,53 @@
+function build_menu(menu_name, menu_id, menu_label, option_values, option_labels, starting_value) {
+    menu_html = ""
+    menu_html += '<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">';
+    menu_html += '<select class="mdl-textfield__input" name="' + menu_name + '" id="' + menu_id + '">';
+    for (var i = 0; i < option_values.length; i++) {
+        if (option_values[i] == starting_value){
+            menu_html += '<option value="' + option_values[i] + '" selected>' + option_labels[i] + '</option>'
+        } else {
+            menu_html += '<option value="' + option_values[i] + '">' + option_labels[i] + '</option>'
+        }
+    }
+    menu_html += '</select>';
+    menu_html += '<label class="mdl-textfield__label" for="' + menu_id + '">' + menu_label + '</label>'
+    <!--window.alert(menu_html);-->
+    menu_html += '</div>'
+    return menu_html
+}
+
+function change_race(race_name) {
+    var subrace_choice_div = document.getElementById("subrace_choice_menu_div")
+    subrace_choice_div.innerHTML = ""
+    if (build_options.race_options.hasOwnProperty(race_name)
+        && build_options.race_options[race_name].hasOwnProperty("subrace_label")) {
+
+        var subrace_options = build_options.race_options[race_name].subrace_options;
+        var subrace_label = build_options.race_options[race_name].subrace_label;
+        subrace_choice_div.innerHTML = build_menu("subrace_choice", "subrace_choice_menu",
+            subrace_label, subrace_options, subrace_options, starting_subrace_choice)
+    }
+    componentHandler.upgradeDom();
+}
+
+function change_class(class_name) {
+    var subclass_primary_choice_div = document.getElementById("subclass_primary_choice_menu_div")
+    subclass_primary_choice_div.innerHTML = ""
+    if (build_options.class_options.hasOwnProperty(class_name)
+        && build_options.class_options[class_name].hasOwnProperty("arg_one_label")) {
+
+        var arg_one_options = build_options.class_options[class_name].arg_one_options;
+        var arg_one_label = build_options.class_options[class_name].arg_one_label;
+        subclass_primary_choice_div.innerHTML = build_menu("subclass_primary_choice", "subclass_primary_choice_menu",
+            arg_one_label, arg_one_options, arg_one_options, starting_subclass_primary_choice)
+    }
+    if (build_options.class_options.hasOwnProperty(class_name)
+        && build_options.class_options[class_name].hasOwnProperty("arg_two_label")) {
+
+        var arg_two_options = build_options.class_options[class_name].arg_two_options;
+        var arg_two_label = build_options.class_options[class_name].arg_two_label;
+        subclass_secondary_choice_div.innerHTML = build_menu("subclass_secondary_choice", "subclass_secondary_choice_menu",
+            arg_two_label, arg_two_options, arg_two_options, starting_subclass_secondary_choice)
+    }
+    componentHandler.upgradeDom();
+}
